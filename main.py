@@ -1,8 +1,14 @@
 import os
 import json
 from marketdata import make_request_with_retry, get_nameid
+import random
 
 investments = []
+randomTexts = ['LOL', 'OMG', 'Oh noo', 'Wow', 'Yikes', 'Aww', 'Oops', 'Ugh', 'Sigh', 'Whew',
+ 'Whoa', 'Ouch', 'Yay', 'Huh?', 'Eek', 'Aww man', 'Heh', 'Grr', 'Darn', 'Yesss',
+ 'Nooo', 'Phew', 'Oopsie', 'Ack', 'Hmm', 'Jeez', 'Hooray', 'Dang', 'What?!', 'Ha!',
+ 'Boo', 'Oof', 'Uh-oh', 'Womp', "D'oh", 'Ahh!', 'Whaaat?', 'Yippee', 'Whoa there', 'Meh',
+ 'Pfft', 'Brr', 'Oh snap!', 'Rats', 'Uh-huh', 'Oh dear', 'Ew', 'Bleh', 'Gasp', 'Awk!']
 
 def ask_for_input():
     print("Input \"help\" to see a list of commands.")
@@ -39,19 +45,19 @@ def ask_for_input():
                     else:
                         print("Checking your investments...")
 
-                        currentValue = 0
+                        currentValue = 0.01
                         invData = json.loads(file_content)  # Load the valid JSON data
 
                         print(f"This should take around {round((len(invData) - 2) * 5.2, 1)} seconds.")
 
                         for inv in invData:
                             if invData.index(inv) < len(invData) - 2:
-                                print("check")
+                                print(randomTexts[random.randint(0, len(randomTexts) - 1)])
                                 for key in dict(inv).keys():
                                     currentValue += get_steam_market_price(key) * inv[key]
 
                         wasValueInJSON = False
-                        lastValue = 0
+                        lastValue = 0.01
 
                         investments = invData
                         for d in investments:
@@ -65,7 +71,7 @@ def ask_for_input():
                             lastValue = round(currentValue, 2)
 
                         wasValueInJSON = False
-                        baseValue = 0
+                        baseValue = 0.01
                         investments = invData
                         for d in investments:
                             if "Base Price" in d:
