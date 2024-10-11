@@ -67,7 +67,7 @@ def ask_for_input():
                                 wasValueInJSON = True
                         
                         if not wasValueInJSON:
-                            investments.append({"Last Price": currentValue})
+                            investments.append({"Last Price": round(currentValue)})
                             lastValue = round(currentValue, 2)
 
                         wasValueInJSON = False
@@ -75,7 +75,7 @@ def ask_for_input():
                         investments = invData
                         for d in investments:
                             if "Base Price" in d:
-                                baseValue = d["Base Price"]
+                                baseValue = round(d["Base Price"])
                                 wasValueInJSON = True
                         
                         if not wasValueInJSON:
@@ -89,6 +89,8 @@ def ask_for_input():
                         print(f"In total everything is worth around {round(currentValue, 2)} PLN.")
                         print(f"Which means that it changed by {round(((currentValue / lastValue) - 1) * 100, 3)}% since last check.")
                         print(f"Or by {round(currentValue / baseValue - 1, 3) * 100}% since the beginning.")
+
+                        input("Press enter to continue...")
 
 
             except json.JSONDecodeError:
@@ -177,8 +179,10 @@ def get_steam_market_price(hashName):
             return int(order_data.get('highest_buy_order', 0)) / 100
         else:
             print("Error, no response")
+            return 0
     else:
         print("Error, bad response")
+        return 0
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
